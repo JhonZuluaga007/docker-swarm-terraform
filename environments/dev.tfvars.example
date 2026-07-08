@@ -1,0 +1,22 @@
+# environments/dev.tfvars.example
+#
+# This is a template, not a real config — it is safe to commit since it
+# contains no secrets, only placeholders. Copy it to a real, gitignored
+# environments/dev.tfvars before filling in your own values:
+#
+#   cp environments/dev.tfvars.example environments/dev.tfvars
+#   # edit environments/dev.tfvars with your real key_name / IP
+#   terraform apply -var-file=environments/dev.tfvars
+#
+# environments/dev.tfvars is covered by the *.tfvars rule in .gitignore, so
+# it will never be committed by accident.
+
+aws_region    = "us-east-1"
+environment   = "dev"
+project_name  = "docker-swarm"
+instance_type = "t3.micro"
+worker_count  = 2
+key_name      = "REPLACE_WITH_YOUR_AWS_KEY_PAIR_NAME"
+
+# No public default for security reasons — set this to your own IP.
+ssh_allowed_cidr_blocks = ["REPLACE_WITH_YOUR_IP/32"]
