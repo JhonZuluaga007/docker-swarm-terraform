@@ -25,9 +25,9 @@ variable "key_name" {
 }
 
 variable "instance_type" {
-  description = "EC2 instance type"
+  description = "EC2 instance type. Defaults to a Nitro-based instance (EBS-optimized by default, supports IMDSv2 natively)."
   type        = string
-  default     = "t2.micro"
+  default     = "t3.micro"
 }
 
 variable "aws_region" {
