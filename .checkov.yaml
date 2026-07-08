@@ -1,0 +1,13 @@
+# Checkov configuration — https://www.checkov.io/2.Basics/Configuration%20Options.html
+directory:
+  - .
+framework:
+  - terraform
+quiet: true
+compact: true
+download-external-modules: false
+
+# No checks are skipped by default. If a finding is a deliberate, documented
+# trade-off (see the README "Design Decisions" section), add it here with a
+# short justification instead of silently ignoring it.
+skip-check: []
