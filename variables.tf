@@ -38,3 +38,20 @@ variable "worker_count" {
     error_message = "worker_count must be at least 1."
   }
 }
+
+variable "ssh_allowed_cidr_blocks" {
+  description = "CIDR blocks allowed to reach SSH (port 22). No public default — must be set explicitly (e.g. [\"<your-ip>/32\"])."
+  type        = list(string)
+}
+
+variable "allow_ssh_from_anywhere" {
+  description = "Explicit opt-in required to allow ssh_allowed_cidr_blocks to include 0.0.0.0/0."
+  type        = bool
+  default     = false
+}
+
+variable "enable_web_ingress" {
+  description = "Whether to open ports 80/443 on the security group, e.g. to expose a demo service through the swarm routing mesh."
+  type        = bool
+  default     = false
+}
