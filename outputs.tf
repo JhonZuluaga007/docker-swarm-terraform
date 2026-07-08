@@ -18,3 +18,8 @@ output "security_group_id" {
   description = "ID of the created security group"
   value       = module.security.swarm_sg_id
 }
+
+output "verify_swarm_command" {
+  description = "Command to verify the Docker Swarm cluster once the instances have finished bootstrapping (allow 2-3 minutes after apply)"
+  value       = "ssh -i <path-to-key> ec2-user@${module.compute.manager_public_ip} 'docker node ls'"
+}

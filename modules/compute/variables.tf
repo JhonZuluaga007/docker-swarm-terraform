@@ -29,3 +29,25 @@ variable "instance_type" {
   type        = string
   default     = "t2.micro"
 }
+
+variable "aws_region" {
+  description = "AWS region used by the AWS CLI inside the instances to exchange the swarm join information via SSM Parameter Store"
+  type        = string
+}
+
+variable "worker_count" {
+  description = "Number of Docker Swarm worker nodes to create"
+  type        = number
+  default     = 2
+
+  validation {
+    condition     = var.worker_count >= 1
+    error_message = "worker_count must be at least 1."
+  }
+}
+
+variable "ami_id" {
+  description = "Optional AMI ID override. Defaults to the latest Amazon Linux 2 AMI resolved via SSM Parameter Store."
+  type        = string
+  default     = null
+}
