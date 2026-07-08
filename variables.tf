@@ -27,3 +27,14 @@ variable "instance_type" {
   type        = string
   default     = "t2.micro"
 }
+
+variable "worker_count" {
+  description = "Number of Docker Swarm worker nodes to create"
+  type        = number
+  default     = 2
+
+  validation {
+    condition     = var.worker_count >= 1
+    error_message = "worker_count must be at least 1."
+  }
+}
