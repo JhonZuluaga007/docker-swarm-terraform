@@ -111,9 +111,15 @@ resource "aws_instance" "manager" {
     ssm_prefix = local.ssm_prefix
   })
 
+  metadata_options {
+    http_tokens   = "required"
+    http_endpoint = "enabled"
+  }
+
   root_block_device {
     volume_size = 30
     volume_type = "gp2"
+    encrypted   = true
   }
 
   tags = {
@@ -140,9 +146,15 @@ resource "aws_instance" "workers" {
     ssm_prefix = local.ssm_prefix
   })
 
+  metadata_options {
+    http_tokens   = "required"
+    http_endpoint = "enabled"
+  }
+
   root_block_device {
     volume_size = 30
     volume_type = "gp2"
+    encrypted   = true
   }
 
   tags = {

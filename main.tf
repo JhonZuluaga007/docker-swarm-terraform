@@ -1,6 +1,14 @@
 # main.tf
 provider "aws" {
   region = var.aws_region
+
+  default_tags {
+    tags = {
+      Project     = var.project_name
+      Environment = var.environment
+      ManagedBy   = "terraform"
+    }
+  }
 }
 
 module "networking" {
@@ -14,9 +22,12 @@ module "networking" {
 module "security" {
   source = "./modules/security"
 
-  environment  = var.environment
-  project_name = var.project_name
-  vpc_id       = module.networking.vpc_id
+  environment             = var.environment
+  project_name            = var.project_name
+  vpc_id                  = module.networking.vpc_id
+  ssh_allowed_cidr_blocks = var.ssh_allowed_cidr_blocks
+  allow_ssh_from_anywhere = var.allow_ssh_from_anywhere
+  enable_web_ingress      = var.enable_web_ingress
 }
 
 module "compute" {
