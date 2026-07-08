@@ -5,5 +5,8 @@
 .terraform.lock.hcl
 *.tfvars
 *.pem
-!example.tfvars
 .DS_Store
+
+# *.tfvars.example files are intentionally NOT matched by the *.tfvars rule
+# above (they end in .example, not .tfvars) — they are safe-to-commit
+# templates. Only real *.tfvars files (with actual values) are ignored.
