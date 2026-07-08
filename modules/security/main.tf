@@ -1,4 +1,6 @@
 # modules/security/main.tf
+# checkov:skip=CKV_AWS_382: Broad egress is required so instances can reach Docker Hub, OS package mirrors, and AWS APIs (SSM); those IP ranges are impractical to allowlist by CIDR. See README Roadmap for VPC endpoints/egress firewall as the production-grade follow-up.
+# checkov:skip=CKV2_AWS_5: False positive — this security group is attached to instances in modules/compute via the security_group_id variable across the module boundary; static HCL scanning (no plan) doesn't resolve that indirection.
 resource "aws_security_group" "swarm" {
   name_prefix = "${var.project_name}-swarm-${var.environment}"
   description = "Security group for Docker Swarm cluster"

@@ -104,6 +104,8 @@ resource "aws_instance" "manager" {
   subnet_id              = var.subnet_id
   vpc_security_group_ids = [var.security_group_id]
   iam_instance_profile   = aws_iam_instance_profile.manager.name
+  ebs_optimized          = true
+  monitoring             = true
 
   user_data = templatefile("${path.module}/templates/user_data.sh.tpl", {
     role       = "manager"
@@ -138,6 +140,8 @@ resource "aws_instance" "workers" {
   subnet_id              = var.subnet_id
   vpc_security_group_ids = [var.security_group_id]
   iam_instance_profile   = aws_iam_instance_profile.worker.name
+  ebs_optimized          = true
+  monitoring             = true
   depends_on             = [aws_instance.manager]
 
   user_data = templatefile("${path.module}/templates/user_data.sh.tpl", {

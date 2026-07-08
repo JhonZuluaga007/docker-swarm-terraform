@@ -23,9 +23,9 @@ variable "key_name" {
 }
 
 variable "instance_type" {
-  description = "Instance type for the EC2 instances"
+  description = "Instance type for the EC2 instances. Defaults to a Nitro-based instance (EBS-optimized by default, supports IMDSv2 natively)."
   type        = string
-  default     = "t2.micro"
+  default     = "t3.micro"
 }
 
 variable "worker_count" {
