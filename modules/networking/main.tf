@@ -3,6 +3,10 @@ data "aws_availability_zones" "available" {
   state = "available"
 }
 
+data "aws_kms_key" "logs" {
+  key_id = "alias/aws/logs"
+}
+
 resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr
   enable_dns_hostnames = true
@@ -15,8 +19,8 @@ resource "aws_vpc" "main" {
   }
 }
 
-# checkov:skip=CKV_AWS_130: Public IP assignment is intentional — no NAT Gateway is deployed (cost trade-off, see README Roadmap for the private-subnet/NAT follow-up). Instances need direct internet access for SSM, yum, and Docker Hub.
 resource "aws_subnet" "public" {
+  #checkov:skip=CKV_AWS_130:Public IP assignment is intentional - no NAT Gateway is deployed (cost trade-off, see README Roadmap for the private-subnet/NAT follow-up). Instances need direct internet access for SSM, yum, and Docker Hub.
   vpc_id                  = aws_vpc.main.id
   cidr_block              = cidrsubnet(var.vpc_cidr, 8, 1)
   map_public_ip_on_launch = true
@@ -73,7 +77,8 @@ resource "aws_default_security_group" "default" {
 
 resource "aws_cloudwatch_log_group" "vpc_flow_logs" {
   name              = "/aws/vpc-flow-logs/${var.project_name}-${var.environment}"
-  retention_in_days = 14
+  retention_in_days = 365
+  kms_key_id        = data.aws_kms_key.logs.arn
 
   tags = {
     Name        = "${var.project_name}-vpc-flow-logs-${var.environment}"
